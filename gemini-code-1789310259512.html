@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Misi Perjalanan Digital Bahasa Arab</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 50%, #7DD3FC 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 12px;
+      position: relative;
+    }
+
+    .star {
+      position: absolute;
+      color: #FDE047;
+      font-size: 1.2rem;
+      animation: pulseStar 2s infinite alternate ease-in-out;
+      pointer-events: none;
+    }
+    @keyframes pulseStar {
+      0% { transform: scale(0.8); opacity: 0.5; }
+      100% { transform: scale(1.3); opacity: 1; }
+    }
+
+    .app-card {
+      width: 100%;
+      max-width: 480px;
+      background-color: #FFFFFF;
+      border: 4px solid #38BDF8;
+      border-radius: 24px;
+      box-shadow: 0px 8px 0px #0284C7;
+      padding: 18px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 520px;
+      justify-content: space-between;
+    }
+
+    .nav-bar {
+      display: flex;
+      gap: 6px;
+      background: #F0F9FF;
+      padding: 4px;
+      border-radius: 14px;
+      border: 2px solid #7DD3FC;
+    }
+    .nav-btn {
+      flex: 1;
+      padding: 8px 4px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 0.8rem;
+      border: none;
+      background: transparent;
+      color: #0369A1;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .nav-btn.active {
+      background: #0EA5E9;
+      color: white;
+      box-shadow: 0px 3px 0px #0284C7;
+    }
+
+    .page {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+    .page.active {
+      display: flex;
+    }
+
+    /* PAGE LOGIN/ISI NAMA */
+    .name-input-box {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #38BDF8;
+      border-radius: 12px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      text-align: center;
+      outline: none;
+    }
+
+    /* PAGE 1: HOME */
+    .home-box {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin: auto 0;
+    }
+    .mascot {
+      font-size: 3.5rem;
+      animation: bounce 2s infinite alternate;
+    }
+    @keyframes bounce {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-8px); }
+    }
+    .home-title {
+      font-family: 'Fredoka One', cursive;
+      color: #0369A1;
+      font-size: 1.5rem;
+    }
+    .home-desc {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #0C4A6E;
+      background: #F0F9FF;
+      border: 2px dashed #0EA5E9;
+      padding: 10px;
+      border-radius: 12px;
+      line-height: 1.4;
+    }
+
+    /* PAGE 2: AKTIVITI */
+    .stage-indicator {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+    }
+    .stage-dot {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #E2E8F0;
+      color: #64748B;
+      font-family: 'Fredoka One', cursive;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .stage-dot.active { background: #0EA5E9; color: white; }
+    .stage-dot.completed { background: #22C55E; color: white; }
+
+    .situation-box {
+      background-color: #FEF3C7;
+      border: 3px solid #F6AD55;
+      border-radius: 14px;
+      padding: 10px;
+      text-align: center;
+    }
+    .situation-title {
+      font-family: 'Fredoka One', cursive;
+      color: #B45309;
+      font-size: 0.9rem;
+    }
+    .situation-desc {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #78350F;
+      margin-bottom: 4px;
+    }
+    .situation-arabic {
+      font-size: 1rem;
+      font-weight: bold;
+      color: #92400E;
+    }
+
+    .section-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 0.8rem;
+      color: #0369A1;
+      margin-bottom: 2px;
+    }
+    
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+    .cat-btn {
+      padding: 6px 2px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 0.75rem;
+      border-radius: 8px;
+      border: 2px solid #0EA5E9;
+      background-color: #E0F2FE;
+      color: #0369A1;
+      cursor: pointer;
+      text-align: center;
+    }
+    .cat-btn.selected {
+      background-color: #0EA5E9;
+      color: white;
+      box-shadow: 0px 3px 0px #0284C7;
+    }
+
+    select {
+      width: 100%;
+      padding: 8px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 0.85rem;
+      border: 2px solid #38BDF8;
+      border-radius: 10px;
+      background: #F8FAFC;
+    }
+
+    .reason-box {
+      background-color: #F0F9FF;
+      border: 2px solid #7DD3FC;
+      border-radius: 10px;
+      padding: 6px;
+      text-align: center;
+    }
+    .reason-arabic { font-size: 1rem; font-weight: bold; color: #0369A1; }
+    .reason-translation { font-size: 0.75rem; color: #64748B; font-weight: 700; }
+
+    /* PAGE 3: LEADERBOARD */
+    .lb-box {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .lb-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #F0F9FF;
+      border: 2px solid #7DD3FC;
+      border-radius: 12px;
+      padding: 10px;
+      font-weight: 800;
+      color: #0369A1;
+    }
+    .lb-rank {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.1rem;
+      width: 30px;
+    }
+    .empty-lb {
+      text-align: center;
+      color: #64748B;
+      font-size: 0.85rem;
+      padding: 20px;
+      font-weight: 700;
+    }
+
+    /* Modal Setting Audio */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4);
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+    }
+    .modal-content {
+      background: white;
+      border: 4px solid #38BDF8;
+      border-radius: 20px;
+      padding: 18px;
+      width: 85%;
+      max-width: 320px;
+      text-align: center;
+    }
+
+    .btn-main {
+      width: 100%;
+      padding: 10px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 0.95rem;
+      color: white;
+      background-color: #22C55E;
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0px 4px 0px #15803D;
+      cursor: pointer;
+    }
+    .btn-setting {
+      background: #0EA5E9;
+      box-shadow: 0px 3px 0px #0284C7;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-family: 'Fredoka One', cursive;
+      cursor: pointer;
+    }
+
+    .result-msg { text-align: center; font-weight: 800; font-size: 0.8rem; min-height: 16px; }
+  </style>
+</head>
+<body onclick="tryAutoPlayMusic()">
+
+  <audio id="bgMusic" loop preload="auto">
+    <source src="https://raw.githubusercontent.com/smassrgb/My-Game-Yusuf/main/background%20music.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="star" style="top: 6%; left: 6%;">✨</div>
+  <div class="star" style="top: 10%; right: 8%;">⭐</div>
+
+  <div class="app-card">
+
+    <!-- Header / Nav (Sembunyi waktu login) -->
+    <div id="topHeader" style="display: none; gap: 6px; align-items: center;">
+      <div class="nav-bar" style="flex: 1;">
+        <button class="nav-btn active" id="btnHome" onclick="switchTab('home')">🏠 Utama</button>
+        <button class="nav-btn" id="btnActivity" onclick="switchTab('activity')">🎮 Misi</button>
+        <button class="nav-btn" id="btnLeaderboard" onclick="switchTab('leaderboard')">🏆 Kedudukan</button>
+      </div>
+      <button class="btn-setting" onclick="openSetting()">⚙️</button>
+    </div>
+
+    <!-- ================= PAGE 0: MASUK NAMA ================= -->
+    <div class="page active" id="pageName">
+      <div class="home-box">
+        <div class="mascot">✍️</div>
+        <h1 class="home-title">Masukkan Nama Anda</h1>
+        <div class="home-desc">Sila taip nama anda untuk memulakan Misi Perjalanan Digital Bahasa Arab!</div>
+        <input type="text" id="studentNameInput" class="name-input-box" placeholder="Taip nama anda di sini..." autocomplete="off">
+        <button class="btn-main" style="margin-top: 10px;" onclick="saveNameAndStart()">Masuk 🔥</button>
+        <div class="result-msg" id="loginErrorMsg"></div>
+      </div>
+    </div>
+
+    <!-- ================= PAGE 1: HOME ================= -->
+    <div class="page" id="pageHome">
+      <div class="home-box">
+        <div class="mascot">🌟</div>
+        <h1 class="home-title" id="welcomeUserText">Selamat Datang!</h1>
+        <div class="home-desc">
+          "Jom bantu watak digital kita memilih kenderaan yang betul berdasarkan situasi perjalanan dalam Bahasa Arab! 🚀✨"
+        </div>
+        <button class="btn-main" style="margin-top: 10px;" onclick="switchTab('activity')">🚀 Mula Aktiviti</button>
+      </div>
+    </div>
+
+    <!-- ================= PAGE 2: AKTIVITI ================= -->
+    <div class="page" id="pageActivity">
+      
+      <div class="stage-indicator">
+        <div class="stage-dot active" id="dot1">1</div>
+        <div class="stage-dot" id="dot2">2</div>
+        <div class="stage-dot" id="dot3">3</div>
+        <div class="stage-dot" id="dot4">4</div>
+        <div class="stage-dot" id="dot5">5</div>
+      </div>
+
+      <div class="situation-box">
+        <div class="situation-title" id="situationNum">📍 Situasi 1:</div>
+        <div class="situation-desc" id="situationText">...</div>
+        <div class="situation-arabic" id="situationArabText">...</div>
+      </div>
+
+      <div>
+        <div class="section-title">1. Pilih Kategori Kenderaan:</div>
+        <div class="category-grid">
+          <button class="cat-btn" onclick="selectCategory('darat', this)">🚗 Darat<br>(مَرْكَبَةٌ بَرِّيَّةٌ)</button>
+          <button class="cat-btn" onclick="selectCategory('udara', this)">✈️ Udara<br>(مَرْكَبَةٌ جَوِّيَّةٌ)</button>
+          <button class="cat-btn" onclick="selectCategory('laut', this)">🚢 Laut<br>(مَرْكَبَةٌ بَحْرِيَّةٌ)</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-title">2. Pilih Kenderaan Paling Sesuai:</div>
+        <select id="vehicleSelect" onchange="updateReason()">
+          <option value="">-- Pilih Kenderaan --</option>
+          <option value="sayarah" data-cat="darat">🚗 سَيَّارَة (Sayarah - Kereta)</option>
+          <option value="hafilah" data-cat="darat">🚌 حَافِلَة (Hafilah - Bas)</option>
+          <option value="qitar" data-cat="darat">🚂 قِطَار (Qitar - Keretapi)</option>
+          <option value="darajah" data-cat="darat">🚲 دَرَّاجَة (Darajah - Basikal)</option>
+          <option value="darajah_nariah" data-cat="darat">🏍️ دَرَّاجَة نَارِيَّة (Darajah Nariah - Motosikal)</option>
+          <option value="shahinah" data-cat="darat">🚛 شَاحِنَة (Shahinah - Lori / Trak)</option>
+          <option value="tairah" data-cat="udara">✈️ طَائِرَة (Tairah - Kapal terbang)</option>
+          <option value="mirwahiah" data-cat="udara">🚁 مِرْوَحِيَّة (Mirwahiah - Helikopte)</option>
+          <option value="safinah" data-cat="laut">🚢 سَفِينَة (Safinah - Kapal)</option>
+        </select>
+      </div>
+
+      <div class="reason-box">
+        <div class="section-title">3. Alasan Ringkas (Bahasa Arab):</div>
+        <div class="reason-arabic" id="reasonArabic">-</div>
+        <div class="reason-translation" id="reasonMalay">(Sila pilih kenderaan dahulu)</div>
+      </div>
+
+      <button class="btn-main" onclick="checkAnswer()">🚀 Hantar Jawapan</button>
+      <div class="result-msg" id="resultMsg"></div>
+    </div>
+
+    <!-- ================= PAGE 3: LEADERBOARD ================= -->
+    <div class="page" id="pageLeaderboard">
+      <h2 style="font-family:'Fredoka One'; color:#0369A1; text-align:center;">🏆 Papan Markah</h2>
+      <div class="lb-box" id="leaderboardList">
+        <div class="empty-lb">Belum ada rekod pelajar. Selesaikan misi untuk masuk ke senarai!</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MODAL SETTING AUDIO -->
+  <div class="modal" id="settingModal">
+    <div class="modal-content">
+      <h3 style="font-family:'Fredoka One'; color:#0369A1; margin-bottom:12px;">⚙️ Tetapan Audio</h3>
+      
+      <button onclick="toggleMusic()" id="musicBtn" class="btn-main" style="background:#0EA5E9; margin-bottom:12px;">🎵 Main Muzik</button>
+      
+      <div style="font-size:0.85rem; font-weight:800; color:#0369A1; margin-bottom:6px;">🔊 Kelantangan Muzik:</div>
+      <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.5" oninput="adjustVolume(this.value)" style="width:100%; margin-bottom:16px;">
+      
+      <button class="btn-main" style="background:#EF4444;" onclick="closeSetting()">Tutup</button>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        num: 1,
+        text: "Ahmad dan keluarganya ingin menyeberangi laut yang luas untuk pergi bercuti ke Pulau Langkawi.",
+        arab: "يُرِيدُ أَحْمَدُ وَعَائِلَتُهُ عُبُورَ الْبَحْرِ لِلْسَفَرِ إِلَى الْجَزِيرَةِ.",
+        correctCat: "laut",
+        correctVehicle: "safinah"
+      },
+      {
+        num: 2,
+        text: "Siti dan rakan-rakannya hendak pergi ke sekolah secara berkumpulan bersama ramai murid lain.",
+        arab: "تُرِيدُ سِيتِي وَأَصْدِقَاؤُهَا الذَّهَابَ إِلَى الْمَدْرَسَةِ مَعَ كَثِيرٍ مِنَ الطُّلَّابِ.",
+        correctCat: "darat",
+        correctVehicle: "hafilah"
+      },
+      {
+        num: 3,
+        text: "Encik Ali perlu terbang dengan sangat cepat merentasi awan untuk pergi ke negara Arab.",
+        arab: "يَحْتَاجُ السَّيِّدُ عَلِيّ إِلَى الطَّيَرَانِ بِسُرْعَةٍ عَبْرَ السَّحَابِ لِلْسَفَرِ إِلَى الدَّوْلَةِ الْعَرَبِيَّةِ.",
+        correctCat: "udara",
+        correctVehicle: "tairah"
+      },
+      {
+        num: 4,
+        text: "Pakar penyelamat mahu mendarat di atas bumbung hospital dengan pantas untuk membawa pesakit kecemasan.",
+        arab: "يُرِيدُ فَرِيقُ الإنْقَاذِ الهُبُوطَ عَلَى سَطْحِ الْمُسْتَشْفَى بِسُرْعَةٍ.",
+        correctCat: "udara",
+        correctVehicle: "mirwahiah"
+      },
+      {
+        num: 5,
+        text: "Ayah ingin membawa barangan binaan yang amat berat dan banyak ke tapak pembinaan.",
+        arab: "يُرِيدُ الأَبُ نَقْلَ مَوَادِّ الْبِنَاءِ الثَّقِيلَةِ إِلَى مَوْقِعِ الْبِنَاءِ.",
+        correctCat: "darat",
+        correctVehicle: "shahinah"
+      }
+    ];
+
+    let currentQIndex = 0;
+    let selectedCat = "";
+    let autoPlayDone = false;
+    let currentStudentName = "";
+    let studentScore = 0;
+    let leaderboardData = [];
+
+    const music = document.getElementById("bgMusic");
+    music.volume = 0.5;
+
+    function tryAutoPlayMusic() {
+      if (!autoPlayDone) {
+        music.play().then(() => {
+          autoPlayDone = true;
+          document.getElementById("musicBtn").innerText = "🔇 Tutup Muzik";
+          document.getElementById("musicBtn").style.backgroundColor = "#EF4444";
+        }).catch(() => {});
+      }
+    }
+    window.addEventListener('DOMContentLoaded', tryAutoPlayMusic);
+
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playSound(type) {
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      const now = audioCtx.currentTime;
+
+      if (type === 'click') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(400, now);
+        osc.frequency.exponentialRampToValueAtTime(800, now + 0.05);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.05);
+        osc.start(now);
+        osc.stop(now + 0.05);
+      } else if (type === 'correct') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(523.25, now);
+        osc.frequency.setValueAtTime(659.25, now + 0.1);
+        osc.frequency.setValueAtTime(783.99, now + 0.2);
+        gain.gain.setValueAtTime(0.4, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.4);
+        osc.start(now);
+        osc.stop(now + 0.4);
+      } else if (type === 'wrong') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(200, now);
+        osc.frequency.linearRampToValueAtTime(100, now + 0.2);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.2);
+        osc.start(now);
+        osc.stop(now + 0.2);
+      }
+    }
+
+    // Fungsi Simpan Nama Pelajar
+    function saveNameAndStart() {
+      const input = document.getElementById("studentNameInput").value.trim();
+      const err = document.getElementById("loginErrorMsg");
+      
+      if (input === "") {
+        playSound('wrong');
+        err.innerText = "⚠️ Sila masukkan nama anda!";
+        err.style.color = "#DC2626";
+        return;
+      }
+
+      playSound('click');
+      currentStudentName = input;
+      document.getElementById("welcomeUserText").innerText = `Selamat Datang, ${currentStudentName}!`;
+      
+      document.getElementById("pageName").classList.remove('active');
+      document.getElementById("topHeader").style.display = "flex";
+      switchTab('home');
+    }
+
+    function openSetting() { 
+      playSound('click');
+      document.getElementById("settingModal").style.display = "flex"; 
+    }
+    function closeSetting() { 
+      playSound('click');
+      document.getElementById("settingModal").style.display = "none"; 
+    }
+    
+    function toggleMusic() {
+      playSound('click');
+      const btn = document.getElementById("musicBtn");
+      if (music.paused) {
+        music.play();
+        btn.innerText = "🔇 Tutup Muzik";
+        btn.style.backgroundColor = "#EF4444";
+      } else {
+        music.pause();
+        btn.innerText = "🎵 Main Muzik";
+        btn.style.backgroundColor = "#0EA5E9";
+      }
+    }
+    function adjustVolume(val) { music.volume = val; }
+
+    function switchTab(tab) {
+      playSound('click');
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
+      if (tab === 'home') {
+        document.getElementById('pageHome').classList.add('active');
+        document.getElementById('btnHome').classList.add('active');
+      } else if (tab === 'activity') {
+        document.getElementById('pageActivity').classList.add('active');
+        document.getElementById('btnActivity').classList.add('active');
+      } else if (tab === 'leaderboard') {
+        document.getElementById('pageLeaderboard').classList.add('active');
+        document.getElementById('btnLeaderboard').classList.add('active');
+        renderLeaderboard();
+      }
+    }
+
+    function loadQuestion() {
+      const q = questions[currentQIndex];
+      document.getElementById("situationNum").innerText = `📍 Situasi ${q.num} daripada 5:`;
+      document.getElementById("situationText").innerText = `"${q.text}"`;
+      document.getElementById("situationArabText").innerText = q.arab;
+      
+      selectedCat = "";
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('selected'));
+      document.getElementById("vehicleSelect").value = "";
+      document.getElementById("reasonArabic").innerText = "-";
+      document.getElementById("reasonMalay").innerText = "(Sila pilih kenderaan dahulu)";
+      document.getElementById("resultMsg").innerText = "";
+    }
+
+    function selectCategory(cat, btn) {
+      playSound('click');
+      selectedCat = cat;
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    }
+
+    function updateReason() {
+      playSound('click');
+      const vehicle = document.getElementById("vehicleSelect").value;
+      const arEl = document.getElementById("reasonArabic");
+      const myEl = document.getElementById("reasonMalay");
+
+      if (vehicle === "safinah") {
+        arEl.innerText = "تِلْكَ سَفِينَةٌ لِلْسَفَرِ فِي الْبَحْرِ";
+        myEl.innerText = "(Itu kapal untuk perjalanan di laut)";
+      } else if (vehicle === "tairah" || vehicle === "mirwahiah") {
+        arEl.innerText = "تِلْكَ مَرْكَبَةٌ لِلْسَفَرِ فِي الْجَوِّ";
+        myEl.innerText = "(Itu kenderaan untuk perjalanan di udara)";
+      } else if (vehicle !== "") {
+        arEl.innerText = "هَذِهِ مَرْكَبَةٌ لِلْسَفَرِ فِي الْبَرِّ";
+        myEl.innerText = "(Ini kenderaan untuk perjalanan di darat)";
+      } else {
+        arEl.innerText = "-";
+        myEl.innerText = "(Sila pilih kenderaan dahulu)";
+      }
+    }
+
+    function checkAnswer() {
+      const q = questions[currentQIndex];
+      const vehicleSelect = document.getElementById("vehicleSelect");
+      const resultMsg = document.getElementById("resultMsg");
+
+      if (!selectedCat || !vehicleSelect.value) {
+        playSound('wrong');
+        resultMsg.innerText = "⚠️ Sila pilih kategori dan kenderaan dahulu!";
+        resultMsg.style.color = "#D97706";
+        return;
+      }
+
+      if (selectedCat === q.correctCat && vehicleSelect.value === q.correctVehicle) {
+        playSound('correct');
+        studentScore++;
+        resultMsg.innerText = "🎉 TAHNIAH! Jawapan Tepat!";
+        resultMsg.style.color = "#16A34A";
+
+        document.getElementById(`dot${q.num}`).classList.remove('active');
+        document.getElementById(`dot${q.num}`).classList.add('completed');
+
+        setTimeout(() => {
+          currentQIndex++;
+          if (currentQIndex < questions.length) {
+            document.getElementById(`dot${questions[currentQIndex].num}`).classList.add('active');
+            loadQuestion();
+          } else {
+            playSound('correct');
+            updateLeaderboardData(currentStudentName, studentScore);
+            document.getElementById("pageActivity").innerHTML = `
+              <div style="text-align:center; padding: 30px 10px;">
+                <h1 style="font-family:'Fredoka One'; color:#16A34A; font-size:1.8rem;">🏆 TAHNIAH ${currentStudentName.toUpperCase()}!</h1>
+                <p style="font-size:0.9rem; font-weight:800; color:#0C4A6E; margin:10px 0;">Anda telah berjaya menyempurnakan kesemua 5 Misi Perjalanan Digital dengan markah <strong>${studentScore}/5</strong>!</p>
+                <button class="btn-main" onclick="switchTab('leaderboard')">🏆 Lihat Kedudukan</button>
+              </div>
+            `;
+          }
+        }, 1200);
+      } else {
+        playSound('wrong');
+        resultMsg.innerText = "❌ Jawapan kurang tepat. Cuba lagi!";
+        resultMsg.style.color = "#DC2626";
+      }
+    }
+
+    // Kemaskini Data Leaderboard Dynamically
+    function updateLeaderboardData(name, score) {
+      const existing = leaderboardData.find(item => item.name.toLowerCase() === name.toLowerCase());
+      if (existing) {
+        if (score > existing.score) existing.score = score;
+      } else {
+        leaderboardData.push({ name: name, score: score });
+      }
+      leaderboardData.sort((a, b) => b.score - a.score);
+    }
+
+    function renderLeaderboard() {
+      const container = document.getElementById("leaderboardList");
+      if (leaderboardData.length === 0) {
+        container.innerHTML = `<div class="empty-lb">Belum ada rekod pelajar. Selesaikan misi untuk masuk ke senarai!</div>`;
+        return;
+      }
+
+      const badges = ['🥇', '🥈', '🥉'];
+      let html = "";
+      leaderboardData.forEach((item, index) => {
+        const rankBadge = badges[index] || `#${index + 1}`;
+        html += `
+          <div class="lb-item">
+            <span class="lb-rank">${rankBadge}</span>
+            <span>${item.name}</span>
+            <span style="color:#22C55E;">${item.score}/5 Misi</span>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
